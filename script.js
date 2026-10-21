@@ -4,8 +4,10 @@ function money(amount) {
 }
 
 // Dynamic API URL (Automatically detects localhost or mobile IP network)
-const API_URL = window.location.protocol + '//' + window.location.hostname + ':3000/api';
-
+// const API_URL = window.location.protocol + '//' + window.location.hostname + ':3000/api';
+const API_URL = window.location.hostname.includes("localhost") 
+  ? "http://localhost:3001/api" 
+  : "https://krishna-corp.onrender.com/api"; // Replace with your actual Render URL
 // Data Arrays (populated from database on startup)
 let items = [];
 let employees = [];
