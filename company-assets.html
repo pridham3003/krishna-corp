@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Assets - Krishna Corp</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+   <!-- Sidebar Container -->
+<div id="sidebar-container"></div>
+
+    <!-- Main Area -->
+    <main class="main">
+      <div class="topbar">
+        <h1>Company Assets (Own Use)</h1>
+        <div class="date">Internal Use Records</div>
+      </div>
+
+      <!-- Assets Section -->
+      <div class="table-section" id="assets">
+        
+        <!-- Add/Edit Asset Form -->
+        <div class="form-section" style="margin-top: 0; margin-bottom: 25px;">
+          <h3 style="margin-bottom: 15px;">Manage Company Asset Entry</h3>
+          <form id="assetForm">
+            <input type="date" id="assetDate" required />
+            <select id="assetType" required>
+              <option value="">Select Type</option>
+              <option value="Purchase">Purchase (Own Use)</option>
+              <option value="Sale">Sale (Own Use Item)</option>
+            </select>
+            <input type="text" id="assetName" placeholder="Item/Asset Name" required />
+            <input type="number" id="assetPrice" placeholder="Price (₹)" required min="0" step="0.01" />
+            
+            <!-- Paid By Account Dropdown -->
+            <select id="assetPaidBy" required>
+              <option value="">Paid By Account</option>
+              <option value="Krishna Corp">Krishna Corp (Company Account)</option>
+              <option value="Ridham Patel">Ridham Patel</option>
+              <option value="Pankajbhai Patel">Pankajbhai Patel</option>
+            </select>
+
+            <select id="assetPaymentMode" required>
+              <option value="">Select Payment Mode</option>
+              <option value="Cash">Cash</option>
+              <option value="UPI">UPI</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Credit">Credit</option>
+            </select>
+            <button type="submit" id="assetSubmitBtn" style="grid-column: span 2;">Add Asset Record</button>
+          </form>
+        </div>
+
+        <!-- Asset Breakdown Summary Banners -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Total Purchases</h4>
+            <span id="assetTotalPurchase" class="red" style="font-size: 18px; font-weight: bold;">₹0</span>
+          </div>
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Ridham Expense</h4>
+            <span id="assetRidhamExpense" class="orange" style="font-size: 18px; font-weight: bold;">₹0</span>
+          </div>
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Pankajbhai Expense</h4>
+            <span id="assetPankajExpense" class="orange" style="font-size: 18px; font-weight: bold;">₹0</span>
+          </div>
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Asset Sales (Income)</h4>
+            <span id="assetTotalSale" class="green" style="font-size: 18px; font-weight: bold;">₹0</span>
+          </div>
+        </div>
+
+        <div class="table-header">
+          <h2>All Asset Records</h2>
+          <div>
+            <input type="text" id="assetSearch" placeholder="Search asset..." />
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Item / Asset Name</th>
+                <th>Price</th>
+                <th>Paid By</th>
+                <th>Payment Mode</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="assetTable">
+              <!-- Dynamically populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

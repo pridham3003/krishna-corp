@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Portal - Krishna Corp</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>KRISHNA CORP</h2>
+      <a href="user.html" class="active">Billing & Inventory</a>
+      <a href="index.html" style="margin-top: 40px; color: #38bdf8; font-size: 13px;" onclick="return checkAdminAccess()">🔒 Switch to Admin</a>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <h1>Staff Billing & Inventory Portal</h1>
+        <div class="date">User Mode</div>
+      </div>
+
+      <!-- Add Sale / Item Form -->
+      <div class="form-section">
+        <h3>Create New Sale / Bill</h3>
+        <form id="itemForm">
+          <input type="date" id="itemDate" required />
+          <select id="transactionType" onchange="handleTransactionTypeChange()" required style="display:none;">
+            <option value="Sale" selected>Sale</option>
+          </select>
+          <input type="text" id="itemParty" placeholder="Customer Name" required />
+          <input type="text" id="itemName" placeholder="Product Description" required />
+          <input type="number" id="itemQuantity" placeholder="Quantity" required min="1" step="any" />
+          <input type="number" id="itemPrice" placeholder="Unit Price (₹)" required min="0" step="any" />
+          <input type="text" id="billNumber" placeholder="Bill Number (e.g. INV-001)" required />
+          <input type="hidden" id="itemPaidBy" value="Krishna Corp" />
+          <select id="paymentMode" required style="grid-column: span 2;">
+            <option value="">Select Payment Mode</option>
+            <option value="Cash">Cash</option>
+            <option value="UPI">UPI</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Credit">Credit (Udhar)</option>
+          </select>
+          <button type="submit" id="formSubmitBtn" style="grid-column: span 2;">Save & Print Bill</button>
+        </form>
+      </div>
+
+      <!-- Credit Sales Table -->
+      <div class="table-section">
+        <div class="table-header">
+          <h2>Credit Sales / Outstanding Dues</h2>
+          <input type="text" id="creditSearch" placeholder="Search credit customer..." />
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total Credit</th>
+                <th>Bill No.</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="creditSalesTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Sales Table -->
+      <div class="table-section">
+        <div class="table-header">
+          <h2>Recent Sales & Invoices</h2>
+          <input type="text" id="saleSearch" placeholder="Search customer or bill..." />
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Bill No.</th>
+                <th>Account</th>
+                <th>Mode</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="salesTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Hidden placeholder for purchasesTable so initInventory doesn't fail -->
+      <div style="display:none;"><tbody id="purchasesTable"></tbody></div>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function checkAdminAccess() {
+      const pwd = prompt("Enter Admin Password:");
+      if (pwd === "krishna123") {
+        localStorage.setItem("krishna_admin_auth", "true");
+        return true;
+      } else {
+        alert("Incorrect admin password!");
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>

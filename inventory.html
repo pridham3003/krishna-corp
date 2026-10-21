@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Items & Inventory - Krishna Corp</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <!-- Sidebar Container -->
+    <div id="sidebar-container"></div>
+
+    <main class="main">
+      <div class="topbar">
+        <h1>Items & Inventory Management</h1>
+        <div class="date" id="currentDateDisplay">Inventory</div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <h3>Total Sales Revenue</h3>
+          <div class="value green" id="invTotalRevenue">₹0</div>
+        </div>
+        <div class="kpi-card">
+          <h3>Total Purchases Investment</h3>
+          <div class="value red" id="invTotalInvestment">₹0</div>
+        </div>
+        <div class="kpi-card">
+          <h3>Inventory Net Balance</h3>
+          <div class="value blue" id="inventoryNetProfit">₹0</div>
+        </div>
+      </div>
+
+      <!-- Add / Edit Item Form -->
+      <div class="form-section">
+        <h3 id="formTitle">Add New Transaction (Sale or Purchase)</h3>
+        <form id="itemForm">
+          <input type="date" id="itemDate" required />
+          <select id="transactionType" onchange="handleTransactionTypeChange()" required>
+            <option value="Sale">Sale</option>
+            <option value="Purchase">Purchase</option>
+          </select>
+          <input type="text" id="itemParty" placeholder="Party / Customer / Supplier Name" required />
+          <input type="text" id="itemName" placeholder="Product Description / Material" required />
+          <input type="number" id="itemQuantity" placeholder="Quantity" required min="0" step="any" />
+          <input type="number" id="itemPrice" placeholder="Unit Price (₹)" required min="0" step="any" />
+          <input type="text" id="billNumber" placeholder="Bill / Invoice Number" required />
+          <select id="itemPaidBy" required>
+            <option value="Krishna Corp" id="defaultPaidByOption">Deposited To Account</option>
+            <option value="Ridham Patel">Ridham Patel</option>
+            <option value="Pankajbhai Patel">Pankajbhai Patel</option>
+          </select>
+          <select id="paymentMode" required style="grid-column: span 2;">
+            <option value="">Select Payment Mode</option>
+            <option value="Cash">Cash</option>
+            <option value="UPI">UPI</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Credit">Credit (Udhar)</option>
+          </select>
+          <button type="submit" id="formSubmitBtn" style="grid-column: span 2;">Add Entry</button>
+        </form>
+      </div>
+
+      <!-- Credit Sales Table (Outstanding Dues) -->
+      <div class="table-section">
+        <div class="table-header">
+          <h2>Credit Sales / Outstanding Dues</h2>
+          <input type="text" id="creditSearch" placeholder="Search credit customer..." />
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total Credit</th>
+                <th>Bill No.</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="creditSalesTable">
+              <!-- Populated by script.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Standard Sales Table -->
+      <div class="table-section">
+        <div class="table-header">
+          <h2>Completed Sales Records</h2>
+          <input type="text" id="saleSearch" placeholder="Search sales..." />
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Bill No.</th>
+                <th>Account</th>
+                <th>Mode</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="salesTable">
+              <!-- Populated by script.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Purchases Table -->
+      <div class="table-section">
+        <div class="table-header">
+          <h2>Inventory Purchases</h2>
+          <div style="display: flex; gap: 10px;">
+            <select id="stockFilter" style="padding: 6px 10px; font-size: 13px;">
+              <option value="All">All Stock</option>
+              <option value="In Stock">In Stock (&gt;5)</option>
+              <option value="Low Stock">Low Stock (1-5)</option>
+              <option value="Out of Stock">Out of Stock (0)</option>
+            </select>
+            <input type="text" id="purchaseSearch" placeholder="Search purchases..." />
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Supplier</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Bill No.</th>
+                <th>Paid By</th>
+                <th>Mode</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="purchasesTable">
+              <!-- Populated by script.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

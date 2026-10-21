@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Krishna Corp</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    // Simple Admin Security Check on Load
+    if (localStorage.getItem("krishna_admin_auth") !== "true") {
+      const pwd = prompt("Enter Admin Password to access Krishna Corp Dashboard:");
+      if (pwd === "krishna123") { // Change "krishna123" to your desired admin password
+        localStorage.setItem("krishna_admin_auth", "true");
+      } else {
+        alert("Incorrect password! Redirecting to Staff Portal.");
+        window.location.href = "user.html";
+      }
+    }
+  </script>
+</head>
+
+<body>
+
+  <div class="container">
+    <div id="sidebar-container"></div>
+
+    <main class="main">
+      <div class="topbar">
+        <h1>Admin Dashboard & Financial Overview</h1>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="dashboardMonthFilter" style="font-size: 13px; font-weight: 600; color: #475569;">Filter
+              Month:</label>
+            <input type="month" id="dashboardMonthFilter" onchange="initDashboard()"
+              style="padding: 6px 10px; font-size: 13px;" />
+          </div>
+          <button onclick="localStorage.removeItem('krishna_admin_auth'); window.location.href='user.html';"
+            style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">Logout</button>
+        </div>
+      </div>
+
+      <!-- KPI Cards Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <h3>Partner Capital Pool</h3>
+          <div class="value blue" id="kpiPartnerCapital">₹0</div>
+          <button class="breakdown-icon" onclick="showPartnerCapitalBreakdown()" title="View Breakdown">🔍</button>
+        </div>
+
+        <div class="kpi-card">
+          <h3>Ridham Spent (Dues)</h3>
+          <div class="value orange" id="kpiRidhamSpent">₹0</div>
+          <button class="breakdown-icon" onclick="showPartnerSpentBreakdown('Ridham Patel')"
+            title="View Breakdown">🔍</button>
+        </div>
+
+        <div class="kpi-card">
+          <h3>Pankajbhai Spent (Dues)</h3>
+          <div class="value orange" id="kpiPankajSpent">₹0</div>
+          <button class="breakdown-icon" onclick="showPartnerSpentBreakdown('Pankajbhai Patel')"
+            title="View Breakdown">🔍</button>
+        </div>
+
+        <div class="kpi-card">
+          <h3>Available Cash / Bank</h3>
+          <div class="value green" id="kpiBalance">₹0</div>
+          <button class="breakdown-icon" onclick="showLiquidityBreakdown()" title="View Breakdown">🔍</button>
+        </div>
+      </div>
+
+      <!-- Monthly Financial Performance Comparison Section -->
+      <div class="table-section" style="margin-bottom: 30px;">
+        <div class="table-header">
+          <h2>Monthly Performance & Comparison</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+          <div style="background: #f8fafc; padding: 18px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 6px;">Total Revenue (Sales)</h4>
+            <div id="compCurrentRevenue"
+              style="font-size: 22px; font-weight: bold; color: #1e293b; margin-bottom: 4px;">₹0</div>
+            <div id="compRevenueDiff" style="font-size: 12px; color: #64748b;">vs prev month</div>
+          </div>
+
+          <div style="background: #f8fafc; padding: 18px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 6px;">Total Outflow (Expenses)</h4>
+            <div id="compCurrentExpense"
+              style="font-size: 22px; font-weight: bold; color: #dc2626; margin-bottom: 4px;">₹0</div>
+            <div id="compExpenseDiff" style="font-size: 12px; color: #64748b;">vs prev month</div>
+          </div>
+
+          <div style="background: #f8fafc; padding: 18px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 6px;">Net Profit</h4>
+            <div id="compCurrentNetProfit" style="font-size: 22px; font-weight: bold; margin-bottom: 4px;">₹0</div>
+            <div id="compNetProfitDiff" style="font-size: 12px; color: #64748b;">vs prev month</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Summary Summaries -->
+      <div class="table-section">
+        <div class="table-header">
+          <h2>Quick Breakdown Summaries</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+          <button onclick="showRevenueBreakdown()"
+            style="padding: 14px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; cursor: pointer; color: #0f172a; text-align: left;">
+            📊 View Sales Revenue Breakdown
+          </button>
+          <button onclick="showMonthlyExpenseBreakdown()"
+            style="padding: 14px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; cursor: pointer; color: #0f172a; text-align: left;">
+            📉 View Total Expense Breakdown
+          </button>
+          <button onclick="showNetProfitBreakdown()"
+            style="padding: 14px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; cursor: pointer; color: #0f172a; text-align: left;">
+            🧮 View Net Profit Calculation
+          </button>
+        </div>
+      </div>
+      <!-- Multi-Month Financial Trend Chart Card -->
+      <div class="card"
+        style="margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; color: #1e293b;">6-Month Financial Trend
+          (Revenue vs Expenses)</h3>
+        <div style="position: relative; height: 300px; width: 100%;">
+          <canvas id="multiMonthChart"></canvas>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div id="kpiModal" class="modal">
+    <div><button onclick="closeKpiModal()">×</button>
+      <h3 id="modalKpiTitle">Breakdown Details</h3>
+      <div id="modalKpiContent"></div>
+    </div>
+  </div>
+  <div id="revenueModal" class="modal">
+    <div><button onclick="closeRevenueModal()">×</button>
+      <h3 id="modalRevenueTitle">Revenue Details</h3>
+      <div id="modalRevenueContent"></div>
+    </div>
+  </div>
+  <div id="expenseModal" class="modal">
+    <div><button onclick="closeExpenseModal()">×</button>
+      <h3 id="modalExpenseTitle">Expense Details</h3>
+      <div id="modalExpenseContent"></div>
+    </div>
+  </div>
+  <div id="netProfitModal" class="modal">
+    <div><button onclick="closeNetProfitModal()">×</button>
+      <h3 id="modalNetProfitTitle">Net Profit Details</h3>
+      <div id="modalNetProfitContent"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

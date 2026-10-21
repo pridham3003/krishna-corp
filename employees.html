@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employees & Salary - Krishna Corp</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .employee-detail-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Sidebar Container -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Area -->
+    <main class="main">
+      <div class="topbar">
+        <h1>Employees & Salary Management</h1>
+        <div class="date">Payroll Records</div>
+      </div>
+
+      <!-- Employees Section -->
+      <div class="table-section" id="employees">
+        
+        <!-- Add/Edit Employee Salary Form -->
+        <div class="form-section" style="margin-top: 0; margin-bottom: 25px;">
+          <h3 style="margin-bottom: 15px;">Manage Salary Record</h3>
+          <form id="empForm">
+            <input type="date" id="empDate" required />
+            
+            <!-- Employee Name Dropdown + Conditional New Input -->
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <select id="empNameSelect" required onchange="handleEmpNameChange()">
+                <option value="">Select Employee</option>
+                <option value="NEW_EMP">+ Add New Employee...</option>
+              </select>
+              <input type="text" id="empNameNew" placeholder="Enter New Employee Name" style="display: none;" />
+            </div>
+
+            <input type="number" id="empSalary" placeholder="Salary Amount (₹)" required min="0" step="0.01" />
+            
+            <!-- Paid By Account Dropdown -->
+            <select id="empPaidBy" required>
+              <option value="">Paid By Account</option>
+              <option value="Krishna Corp">Krishna Corp (Company Account)</option>
+              <option value="Ridham Patel">Ridham Patel</option>
+              <option value="Pankajbhai Patel">Pankajbhai Patel</option>
+            </select>
+
+            <select id="empPaymentMode" required>
+              <option value="">Select Payment Mode</option>
+              <option value="Cash">Cash</option>
+              <option value="UPI">UPI</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Credit">Credit</option>
+            </select>
+            <button type="submit" id="empSubmitBtn" style="grid-column: span 2;">Add Salary Record</button>
+          </form>
+        </div>
+
+        <!-- Total Salaries Paid Banner -->
+        <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 25px; text-align: center;">
+          <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Total Salaries Disbursed</h4>
+          <span id="empTotalSalary" class="red" style="font-size: 22px; font-weight: bold;">₹0</span>
+        </div>
+
+        <!-- Employee Individual Cumulative Summary Table -->
+        <div style="margin-bottom: 30px;">
+          <h3 style="margin-bottom: 12px; color: #1e293b; font-size: 16px;">Employee Lifetime Summary (Click Name to View Monthly Breakdown)</h3>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Total Salary Paid (All-Time)</th>
+                </tr>
+              </thead>
+              <tbody id="empSummaryTable">
+                <!-- Dynamically populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dynamic Employee Monthly Breakdown View (Appears on click) -->
+        <div id="empDetailViewContainer"></div>
+
+        <div class="table-header">
+          <h2>All Salary Transactions History</h2>
+          <div>
+            <input type="text" id="empSearch" placeholder="Search employee..." />
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Employee Name</th>
+                <th>Salary</th>
+                <th>Paid By</th>
+                <th>Payment Mode</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="empTable">
+              <!-- Dynamically populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

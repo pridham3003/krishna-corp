@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operating Expenses - Krishna Corp</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <!-- Sidebar Container -->
+<div id="sidebar-container"></div>
+
+    <!-- Main Area -->
+    <main class="main">
+      <div class="topbar">
+        <h1>Operating Expenses Management</h1>
+        <div class="date">Overhead & Utility Records</div>
+      </div>
+
+      <!-- Expenses Section -->
+      <div class="table-section" id="expenses">
+        
+        <!-- Add/Edit Expense Form -->
+        <div class="form-section" style="margin-top: 0; margin-bottom: 25px;">
+          <h3 style="margin-bottom: 15px;">Manage Expense Record</h3>
+          <form id="expenseForm">
+            <input type="date" id="expenseDate" required />
+            
+            <select id="expenseCategory" required>
+              <option value="">Select Category</option>
+              <option value="Rent">Rent</option>
+              <option value="Electricity Bill">Electricity Bill</option>
+              <option value="Transportation / Fuel">Transportation / Fuel</option>
+              <option value="Office Supplies">Office Supplies</option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <input type="text" id="expenseDescription" placeholder="Description / Note" required />
+            <input type="number" id="expenseAmount" placeholder="Amount (₹)" required min="0" step="0.01" />
+            
+            <!-- Paid By Account Dropdown -->
+            <select id="expensePaidBy" required>
+              <option value="">Paid By Account</option>
+              <option value="Krishna Corp">Krishna Corp (Company Account)</option>
+              <option value="Ridham Patel">Ridham Patel</option>
+              <option value="Pankajbhai Patel">Pankajbhai Patel</option>
+            </select>
+
+            <select id="expensePaymentMode" required>
+              <option value="">Select Payment Mode</option>
+              <option value="Cash">Cash</option>
+              <option value="UPI">UPI</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Credit">Credit</option>
+            </select>
+            <button type="submit" id="expenseSubmitBtn" style="grid-column: span 2;">Add Expense Record</button>
+          </form>
+        </div>
+
+        <!-- Expense Breakdown Summary Banners (4 Cards) -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Total Expenses</h4>
+            <span id="expenseTotalAmount" class="red" style="font-size: 18px; font-weight: bold;">₹0</span>
+          </div>
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Krishna Corp Expense</h4>
+            <span id="expenseKrishnaAmount" class="green" style="font-size: 18px; font-weight: bold;">₹0</span>
+          </div>
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Ridham Expense</h4>
+            <span id="expenseRidhamAmount" class="orange" style="font-size: 18px; font-weight: bold;">₹0</span>
+          </div>
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Pankajbhai Expense</h4>
+            <span id="expensePankajAmount" class="orange" style="font-size: 18px; font-weight: bold;">₹0</span>
+          </div>
+        </div>
+
+        <div class="table-header">
+          <h2>All Operating Expenses History</h2>
+          <div>
+            <input type="text" id="expenseSearch" placeholder="Search expense..." />
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Paid By</th>
+                <th>Payment Mode</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="expenseTable">
+              <!-- Dynamically populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

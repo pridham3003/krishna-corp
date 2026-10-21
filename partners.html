@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partners & Capital - Krishna Corp</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div id="sidebar-container"></div>
+
+    <main class="main">
+      <div class="topbar">
+        <h1>Partners Capital & Withdrawals</h1>
+        <div class="date">Capital & Drawings Ledger</div>
+      </div>
+
+      <div class="table-section" id="partners">
+        
+        <!-- Add Capital / Withdrawal Form -->
+        <div class="form-section" style="margin-top: 0; margin-bottom: 25px;">
+          <h3 style="margin-bottom: 15px;">Manage Partner Transaction</h3>
+          <form id="partnerForm">
+            <input type="date" id="partnerDate" required />
+            
+            <select id="partnerType" required>
+              <option value="Investment">Investment (Capital In (+))</option>
+              <option value="Withdrawal">Withdrawal / Drawing (Capital Out (-))</option>
+              <option value="Settlement Receive">Settlement Receive (Partner Repaying Cash/UPI)</option>
+              <option value="Settlement Pay">Settlement Pay (Reimbursing Partner Expenses)</option>
+            </select>
+
+            <input type="text" id="partnerName" placeholder="Partner Name (e.g., Ridham Patel)" required />
+            <input type="number" id="partnerAmount" placeholder="Amount (₹)" required min="0" step="0.01" />
+            
+            <select id="partnerPaymentMode" required style="grid-column: span 2;">
+              <option value="">Select Payment Mode</option>
+              <option value="Cash">Cash</option>
+              <option value="UPI">UPI</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+            </select>
+            <button type="submit" id="partnerSubmitBtn" style="grid-column: span 2;">Add Record</button>
+          </form>
+        </div>
+
+        <!-- Summary Banners: Total Net Partner Capital & Total Partner Investment Pool -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px;">
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Total Net Partner Capital</h4>
+            <span id="partnerTotalInvestment" class="blue" style="font-size: 22px; font-weight: bold;">₹0</span>
+          </div>
+          <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #64748b; font-size: 13px; margin-bottom: 4px;">Total Partner Investment Pool (Capital + Spent)</h4>
+            <span id="partnerTotalInvestmentPool" class="green" style="font-size: 22px; font-weight: bold;">₹0</span>
+          </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="chart-section" style="margin-bottom: 25px; max-width: 400px; margin-left: auto; margin-right: auto;">
+          <h3 style="font-size: 14px; margin-bottom: 10px; text-align: center;">Net Capital by Partner</h3>
+          <div style="height: 220px;">
+            <canvas id="partnerChart"></canvas>
+          </div>
+        </div>
+
+        <div class="table-header">
+          <h2>All Partner Capital & Withdrawal Records</h2>
+          <div>
+            <input type="text" id="partnerSearch" placeholder="Search partner..." />
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Partner Name</th>
+                <th>Amount</th>
+                <th>Mode</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="partnerTable">
+              <!-- Dynamically populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
